@@ -4,6 +4,8 @@
 #' @param nrows maze height (number of rows); default value set to 0.
 #' @param ncols maze width (number of columns); default value set to 0.
 #' @param inShiny a flag that marks whether the function is called from a shiny app or console
+#' @param lineWidth to specify th line width for plotting maze
+#'
 #'
 #' @return This function uses ggplot to plot a maze. Currently, maze enterance and exit
 #'  points (cells/nodes) are fixed.
@@ -16,7 +18,9 @@
 #' @export
 
 
-plotMaze <- function(gD=NA, nrows=0, ncols=0, inShiny = FALSE){
+plotMaze <- function(gD=NA, nrows=0, ncols=0, inShiny = FALSE, lineWidth = 1, saveMazeAt = here::here(), mazeName){
+
+  SaveMazeFile <- paste0(saveMazeAt,"//",mazeName )
 
   if (!inShiny){
     if (!exists(deparse(substitute(gD))))
@@ -47,10 +51,17 @@ plotMaze <- function(gD=NA, nrows=0, ncols=0, inShiny = FALSE){
     }
 
   m <- ggplot2::ggplot(data = df)
-  m <- m + ggplot2::geom_segment(ggplot2::aes(x = x1, y = y1, xend = x2, yend = y2), data = df)
+  m <- m + ggplot2::geom_segment(ggplot2::aes(x = x1, y = y1, xend = x2, yend = y2), data = df, linewidth = lineWidth)
   m <- m + ggplot2::theme_bw()
-  m + ggplot2::theme(axis.title=ggplot2::element_blank(), axis.text=ggplot2::element_blank(), axis.ticks=ggplot2::element_blank(),
-                     panel.grid=ggplot2::element_blank() )
+  m + ggplot2::theme(axis.title=ggplot2::element_blank(),
+                     axis.text=ggplot2::element_blank(),
+                     axis.ticks=ggplot2::element_blank(),
+                     panel.grid=ggplot2::element_blank(),
+                     panel.background = ggplot2::element_blank(),
+                     panel.border = ggplot2::element_blank())
+
+
+  ggplot2::ggsave(filename = SaveMazeFile, dpi = 300)
 
 
 }
