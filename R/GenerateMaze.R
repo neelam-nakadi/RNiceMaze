@@ -13,11 +13,14 @@ source(here::here("R", "stepByStepMaze.R"))
 source(here::here("R", "plotMaze.R"))
 source(here::here("R", "plotMazeSolution.R"))
 
+source(here::here("R", "plotMazeCircular.R"))
+source(here::here("R", "plotMazeSolutionCircular.R"))
+
 # Set maze parameters
 Linewidth = 2
 LineColor = "Green"
-Rows = 10
-Columns = 11
+Rows = 12
+Columns = 12
 SaveMazeAt = "D://Neelam//Rudhvi Reading material//Rudhvi-diy-books//Maze book//Maze images//maze"
 
 
@@ -49,3 +52,8 @@ plotMaze(maze3, Rows, Columns, lineWidth = Linewidth, saveMazeAt = SaveMazeAt, m
 # maze6 <- makeGraph(Rows, Columns)
 # maze6 <- makeMaze_kruskal(maze6, stepBystep = TRUE, nrows=Rows, ncols=Columns)
 # plotMaze(maze6, Rows, Columns, lineWidth = Linewidth)
+
+maze7 <- makeGraph(Rows, Columns)
+maze7 <- makeMaze_dfs(maze7)
+plotMazeCircular(maze7, Rows, Columns, lineWidth = Linewidth, saveMazeAt = SaveMazeAt, mazeName = "TrialMazeCircular_df.png")
+plotMazeSolutionCircular(maze7, Rows, Columns)
